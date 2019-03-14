@@ -1,0 +1,49 @@
+---
+spring:
+  application:
+    name: address-service
+
+server:
+  port: ${PORT:8080}
+
+eureka:
+  client: 
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    metadata-map:
+      version: 1.0.0
+      cluster: DEV            # Required by Turbine (see turbine project's application.yml)
+      zone: AWS-EU-FRA        # Specify the zone this service is running in. Used to match clients in the same zone first.
+
+# configurations of the actuator /info endpoint
+info: 
+  app:
+    name: "Address Service"
+    description: "An address service instance."
+      
+---
+spring.profiles: cloud
+
+eureka:
+  instance: 
+    hostname: ${vcap.application.uris[0]:localhost}
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: 443
+    metadata-map:
+      # Adding information about the application GUID and app instance index to 
+      # each instance metadata. This will be used for setting the X-CF-APP-INSTANCE header
+      # to instruct Go-Router where to route.
+      cfAppGuid:       ${vcap.application.application_id}
+      cfInstanceIndex: ${INSTANCE_INDEX}
+    
+  client: 
+    serviceUrl:
+      defaultZone: https://eureka-server.<your cf domain>/eureka
+  
+    
+      
+
+
+

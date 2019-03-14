@@ -1,0 +1,14 @@
+---
+applications:
+- name: d056076-address-service-client
+  memory: 1024M
+  disk_quota: 512M
+  instances: 1
+  buildpack: java_buildpack
+  path: ./target/address-service-client-0.0.1-SNAPSHOT.jar
+  
+  routes: 
+  - route: address-service-client.your_CF_domain.com
+  
+  env:
+    spring.profiles.active: cloud # activate the spring profile named 'cloud'.
