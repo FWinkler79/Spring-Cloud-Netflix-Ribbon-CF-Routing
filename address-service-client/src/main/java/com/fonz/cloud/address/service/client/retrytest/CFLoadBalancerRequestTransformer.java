@@ -1,4 +1,4 @@
-package com.sap.cloud.address.service.client.retrytest;
+package com.fonz.cloud.address.service.client.retrytest;
 
 import java.net.URI;
 import java.util.Map;

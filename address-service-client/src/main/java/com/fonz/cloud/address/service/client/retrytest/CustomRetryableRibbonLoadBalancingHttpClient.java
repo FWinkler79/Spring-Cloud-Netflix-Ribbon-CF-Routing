@@ -1,4 +1,4 @@
-package com.sap.cloud.address.service.client.retrytest;
+package com.fonz.cloud.address.service.client.retrytest;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancedRetryFactory;

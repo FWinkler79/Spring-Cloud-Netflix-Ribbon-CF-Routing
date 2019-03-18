@@ -1,4 +1,4 @@
-package com.sap.cloud.address.service.client;
+package com.fonz.cloud.address.service;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

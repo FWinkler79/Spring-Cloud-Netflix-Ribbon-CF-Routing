@@ -1,4 +1,4 @@
-package com.sap.cloud.address.service;
+package com.fonz.cloud.eureka.service;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
