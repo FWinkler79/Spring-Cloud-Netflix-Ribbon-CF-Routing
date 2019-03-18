@@ -71,8 +71,7 @@ public class RibbonCloudFoundryRetryTest {
         return new FailingAddressServiceClient();
     }
 
-    @LoadBalanced // Note this annotation! It makes sure that RestTemplate uses Ribbon under the
-                  // hood and thus inherits Eureka integration.
+    @LoadBalanced // Note this annotation! It makes sure that RestTemplate uses Ribbon under the hood and thus inherits Eureka integration.
     @Bean
     public RestTemplate failingAddressServiceClientRestTemplate() {
         return new RestTemplate();

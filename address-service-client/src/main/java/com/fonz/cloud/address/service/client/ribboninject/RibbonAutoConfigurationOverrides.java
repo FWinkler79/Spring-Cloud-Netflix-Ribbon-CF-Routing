@@ -44,4 +44,12 @@ public class RibbonAutoConfigurationOverrides {
     public LoadBalancerClient loadBalancerClient() {
         return new CustomRibbonLoadBalancerClient(springClientFactory);
     }
+    
+    // This is how you would override implementations of 
+    // Ribbon extension interfaces with your custom implementation.
+    //
+    //@Bean
+    //public ILoadBalancer customLoadBalancer() {
+    //    return new MyCustomRibbonLoadBalancer();
+    //}
 }
