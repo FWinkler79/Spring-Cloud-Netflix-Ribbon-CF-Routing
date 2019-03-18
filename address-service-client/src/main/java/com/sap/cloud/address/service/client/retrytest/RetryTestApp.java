@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerRequestTransformer;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +45,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker
-// @RibbonClient(name = "address-service") not required with Eureka on classpath.
+@RibbonClient(name = "address-service", configuration = RibbonAutoConfigurationOverrides.class ) 
 public class RetryTestApp {
     
     public static void main(String[] args) throws RestClientException, IOException {
@@ -63,5 +65,10 @@ public class RetryTestApp {
     @Bean
     public RestTemplate failingAddressServiceClientRestTemplate() {
         return new RestTemplate();
+    }
+    
+    @Bean 
+    public LoadBalancerRequestTransformer myRequestTransformer() {
+        return new CFLoadBalancerRequestTransformer();
     }
 }
