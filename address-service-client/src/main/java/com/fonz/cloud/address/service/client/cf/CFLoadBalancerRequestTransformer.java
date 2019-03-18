@@ -1,4 +1,4 @@
-package com.fonz.cloud.address.service.client.retrytest;
+package com.fonz.cloud.address.service.client.cf;
 
 import java.net.URI;
 import java.util.Map;
@@ -14,6 +14,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.niws.loadbalancer.DiscoveryEnabledServer;
 
+/**
+ * A custom implementation of a {@link LoadBalancerRequestTransformer}.
+ * This (contrary to what the interface name implies) is an interceptor for
+ * requests sent by the load balancer for Spring Cloud LoadBalancer framework.
+ * In the case of a Ribbon-backed implementation, this class intercepts requests sent by Ribbon
+ * as a result of its retry strategy.
+ * 
+ * The implementation retrieves the Eureka service instance information from the {@link ServiceInstance}
+ * passed into {@link CFLoadBalancerRequestTransformer#transformRequest(HttpRequest, ServiceInstance)} by
+ * casting it to the correct sub type - which is only valid if you are using Ribbon and Eureka in combination.
+ * 
+ * It then retrieves the metadata from the service instance that was selected by Ribbon. It checks for the following 
+ * entries: 
+ *  - the GUID of the CF app the instance is a clone of 
+ *  - information about the index of the instance
+ *    
+ *  Using this information, it will set the CF routing header instructing Go-Router to route the (retry) request to
+ *  exactly this application / service instance and not do its own load-balancing.
+ *  This effectively lets Ribbon take over LoadBalancing in a Cloud Foundry deployment for this application. 
+ */
 public class CFLoadBalancerRequestTransformer implements LoadBalancerRequestTransformer {
     public static final String CF_APP_GUID = "cfAppGuid";
     public static final String CF_INSTANCE_INDEX = "cfInstanceIndex";

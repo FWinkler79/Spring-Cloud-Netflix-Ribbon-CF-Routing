@@ -1,4 +1,4 @@
-package com.fonz.cloud.address.service.client.retrytest;
+package com.fonz.cloud.address.service.client.cf;
 
 import java.io.IOException;
 
@@ -46,10 +46,10 @@ import org.springframework.web.client.RestTemplate;
 @EnableFeignClients
 @EnableCircuitBreaker
 @RibbonClient(name = "address-service", configuration = RibbonAutoConfigurationOverrides.class ) 
-public class RetryTestApp {
+public class RibbonCloudFoundryRetryTest {
     
     public static void main(String[] args) throws RestClientException, IOException {
-        ApplicationContext ctx = SpringApplication.run(RetryTestApp.class, args);
+        ApplicationContext ctx = SpringApplication.run(RibbonCloudFoundryRetryTest.class, args);
         
         FailingAddressServiceClient failingAddressServiceClient = ctx.getBean(FailingAddressServiceClient.class);
         System.out.println(failingAddressServiceClient);
