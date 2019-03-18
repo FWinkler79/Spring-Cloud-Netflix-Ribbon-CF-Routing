@@ -1,4 +1,4 @@
-package com.fonz.cloud.address.service.client.cf;
+package com.fonz.cloud.address.service.client.ribboninject;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancedRetryFactory;
@@ -49,6 +49,4 @@ public class CustomRetryableRibbonLoadBalancingHttpClient extends RetryableRibbo
         System.out.println("MyLoadbalancer called! - executeWithLoadBalancer(RibbonApacheHttpRequest request, IClientConfig requestConfig)");
         return super.executeWithLoadBalancer(request, requestConfig);
     }
-
-    
 }

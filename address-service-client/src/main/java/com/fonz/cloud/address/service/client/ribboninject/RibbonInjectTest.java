@@ -1,4 +1,4 @@
-package com.fonz.cloud.address.service.client.cf;
+package com.fonz.cloud.address.service.client.ribboninject;
 
 import java.io.IOException;
 
@@ -7,15 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerRequestTransformer;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import com.fonz.cloud.address.service.client.ribboninject.RibbonAutoConfigurationOverrides;
 
 /**
  * A sample class that shows Ribbon's retry capabilities using @Loadbalance'd
@@ -46,10 +43,11 @@ import com.fonz.cloud.address.service.client.ribboninject.RibbonAutoConfiguratio
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker
-public class RibbonCloudFoundryRetryTest {
+@RibbonClient(name = "address-service", configuration = RibbonAutoConfigurationOverrides.class)
+public class RibbonInjectTest {
 
     public static void main(String[] args) throws RestClientException, IOException {
-        ApplicationContext ctx = SpringApplication.run(RibbonCloudFoundryRetryTest.class, args);
+        ApplicationContext ctx = SpringApplication.run(RibbonInjectTest.class, args);
 
         String[] availableBeans = ctx.getBeanDefinitionNames();
         dumpBeans(availableBeans);
@@ -76,10 +74,5 @@ public class RibbonCloudFoundryRetryTest {
     @Bean
     public RestTemplate failingAddressServiceClientRestTemplate() {
         return new RestTemplate();
-    }
-
-    @Bean
-    public LoadBalancerRequestTransformer customRequestTransformer() {
-        return new CFLoadBalancerRequestTransformer();
     }
 }

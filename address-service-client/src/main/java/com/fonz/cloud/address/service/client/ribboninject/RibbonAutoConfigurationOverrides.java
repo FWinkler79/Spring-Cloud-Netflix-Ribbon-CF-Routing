@@ -1,4 +1,4 @@
-package com.fonz.cloud.address.service.client.cf;
+package com.fonz.cloud.address.service.client.ribboninject;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;

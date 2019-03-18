@@ -129,6 +129,5 @@ public class CFLoadBalancerRequestTransformer implements LoadBalancerRequestTran
         public URI getURI() {
             return request.getURI();
         }
-        
     }  
 }
