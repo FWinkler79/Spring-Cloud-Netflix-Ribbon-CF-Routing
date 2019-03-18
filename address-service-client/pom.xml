@@ -87,13 +87,34 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+	<profiles>
+   <profile>
+     <id>ribbon-cf</id>
+     <activation>
+       <activeByDefault>true</activeByDefault>
+     </activation>
+     <properties>
+       <spring.boot.mainClass>com.fonz.cloud.address.service.client.cf.RibbonCloudFoundryRetryTest</spring.boot.mainClass>
+     </properties>
+   </profile>
+   <profile>
+     <id>ribbon-inject</id>
+     <properties>
+       <spring.boot.mainClass>com.fonz.cloud.address.service.client.ribboninject.RibbonInjectTest</spring.boot.mainClass>
+     </properties>
+   </profile>
+  </profiles>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>${spring.boot.mainClass}</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
