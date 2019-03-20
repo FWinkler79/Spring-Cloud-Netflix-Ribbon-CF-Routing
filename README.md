@@ -241,7 +241,8 @@ public class RibbonCloudFoundryRetryTest {
 
 Note the `customRequestTransformer()` bean declaration!
 
-Also note that the application uses a `@LoadBalanced RestTemplate` as its HTTP implementation (should also work for `FeignClient`s).
+Also note that the application uses a `@LoadBalanced RestTemplate` as its HTTP implementation. 
+By the time of writing this (March 2019), for `FeignClient`s a different approach will be necessary and we could not get it to work, yet.
 As a result Ribbon will act as the load balancer implementation and the `LoadBalancerRequestTransformer` will intercept the requests Ribbon will send (including all its retry attempts it may perform). 
 
 ## Ribbon Injection Test
